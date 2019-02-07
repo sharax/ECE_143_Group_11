@@ -1,8 +1,8 @@
 # ECE-143--SOFIFA-Data-Analysis
-Visualization and exploration of SOFIFA Dataset 
+Visualization and exploration of SOFIFA Dataset <br>
 
-ZEOR STEP:(In Progress)
-WAITING FOR PROJECT APPROVAL
+Zero Step:(In Progress)<br>
+WAITING FOR PROJECT APPROVAL<br>
 
-FIRST STEP:(TBD)
-DATA Analysis
+First Step:(TBD)<br>
+Data Analysis
