@@ -1,4 +1,4 @@
-# ECE-143--SOFIFA-Data-Analysis
+# ECE-143 SOFIFA Data Analysis
 Visualization and exploration of SOFIFA Dataset <br>
 
 Zero Step:(In Progress)<br>
