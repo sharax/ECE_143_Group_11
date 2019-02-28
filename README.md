@@ -9,5 +9,4 @@ Data Scraping: On going:<br>
 People working on it<br>
 1.) Sharath<br>
 2.) Yiran<br>
-3.) Harish<br>
 Estimated time of completion: 28/02<br>
