@@ -9,7 +9,7 @@ Status: On going:<br>
 People working on it<br>
 1.) Sharath<br>
 2.) Yiran<br>
-Estimated time of completion: 28/02<br>
+Estimated time of completion: 02/28<br>
 
 Second Step: Data Analysis<br>
 Status: On going<br>
@@ -18,4 +18,4 @@ People working on it<br>
 2.) Yiran<br>
 3.) Harish<br>
 4.) Minhong<br>
-Estimated time of completion: 04/03<br>
+Estimated time of completion: 03/04<br>
