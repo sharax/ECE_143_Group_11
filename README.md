@@ -4,7 +4,7 @@ Visualization and exploration of SOFIFA Dataset <br>
 Zero Step:(Status: Aprooved)<br>
 <br>
 
-First Step:(TBD)<br>
+First Step:(Data scrapping using beautiful soup)<br>
 Data Scraping: On going:<br>
 People working on it<br>
 1.) Sharath<br>
