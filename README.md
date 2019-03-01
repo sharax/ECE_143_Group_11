@@ -9,6 +9,7 @@ Status: On going:<br>
 People working on it<br>
 1.) Sharath<br>
 2.) Yiran<br>
+3.) Minhong<br>
 Estimated time of completion: 02/28<br>
 
 Second Step: Data Analysis<br>
