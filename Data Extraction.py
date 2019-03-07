@@ -124,7 +124,7 @@ for player_name, url in player_urls.items():
 print('Time elapsed: %.2f minutes.' %((time.time()-start_time)/60))
 
 
-# In[40]:
+# In[49]:
 
 
 # creating, trimming and saving the player attributes dataframe
@@ -139,7 +139,7 @@ for name, ratings in player_attr.items():
 
 # trimming
 players_per_category = {st:0, mid:0, df:0, gk:0}
-desired_players_per_category = {st:2500, mid:4500, df:4000, gk:1000}
+desired_players_per_category = {st:2000, mid:4000, df:3000, gk:1000}
 for row in player_attr_dataframe.iterrows():
     category = row[1][1]
     if players_per_category[category] != desired_players_per_category[category]:
@@ -153,7 +153,7 @@ print('Number of players in each category:',players_per_category)
 player_attr_dataframe.to_csv('player_attributes.csv')
 
 
-# In[41]:
+# In[50]:
 
 
 # check if all the data were fetched
@@ -164,7 +164,7 @@ else:
     print('All data fetched')
 
 
-# In[42]:
+# In[51]:
 
 
 # reading and displaying the player attribute dataframe
