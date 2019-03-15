@@ -46,11 +46,12 @@ player_category_map = {'LW':st, 'ST':st, 'RW':st, 'LF':st, 'CF':st, 'RF':st,
                       'GK': gk}
 content_aux_list = ['meta', 'column col-4 text-center']
 
-attr_list = ['Crossing', 'Finishing', 'Heading Accuracy', 'Short Passing', 'Volleys', 'Dribbling', 'Curve', 'FK Accuracy',
-             'Long Passing', 'Ball Control', 'Acceleration', 'Sprint Speed', 'Agility', 'Reactions', 'Balance', 'Shot Power',
-             'Jumping', 'Stamina', 'Strength', 'Long Shots', 'Aggression', 'Interceptions', 'Positioning', 'Vision',
-             'Penalties', 'Composure', 'Marking', 'Standing Tackle', 'Sliding Tackle', 'GK Diving', 'GK Handling',
-             'GK Kicking', 'GK Positioning', 'GK Reflexes']
+attr_list = ['Crossing', 'Finishing', 'Heading Accuracy', 'Short Passing', 'Volleys', 'Dribbling', 'Curve',
+             'FK Accuracy', 'Long Passing', 'Ball Control', 'Acceleration', 'Sprint Speed', 'Agility', 
+             'Reactions', 'Balance', 'Shot Power', 'Jumping', 'Stamina', 'Strength', 'Long Shots', 
+             'Aggression', 'Interceptions', 'Positioning', 'Vision', 'Penalties', 'Composure', 'Marking',
+             'Standing Tackle', 'Sliding Tackle', 'GK Diving', 'GK Handling', 'GK Kicking',
+             'GK Positioning', 'GK Reflexes']
 aux_attr_list = ['Player Category', 'Age', 'Height', 'Weight', 'Overall Rating', 'Value', 'Wage'] 
 attr_len = len(attr_list)
 aux_attr_len = len(aux_attr_list)
@@ -79,7 +80,7 @@ for player_name, url in player_urls.items():
             if len(number) != 0:      new_line.append(number)
         lines.append(new_line)
 
-    # fetching the attribute ratings by matching the words with the list of attributes given by 'attr_list'
+    # fetching the attribute ratings by matching the words with list of attributes given by 'attr_list'
     attr_ratings = []
     attr_count = 0
     for line in lines:
@@ -99,7 +100,7 @@ for player_name, url in player_urls.items():
         if len(rating.split('+')) != 1:   attr_ratings[i] = rating.split('+')[0]
         if len(rating.split('-')) != 1:   attr_ratings[i] = rating.split('-')[0]
     if attr_count != attr_len-1:
-        print(player_name, '- datapoint not included')   # due to missed attributes, if any
+        print(player_name, '- player not included')   # due to missed attributes, if any
         continue
     
     # fetching the auxiliary attribute data by matching the words with the 'aux_attr_list'
@@ -111,8 +112,10 @@ for player_name, url in player_urls.items():
             for i,word in enumerate(line):
                 word_prev = line[i-1]
                 if word[0].isdigit() and word_prev[-3:] == aux_attr_list[1]:
-                    if len(word_prev[:-3]) < 2:   aux_attr_data.append(player_category_map[line[i-2]])
-                    else:                         aux_attr_data.append(player_category_map[word_prev[:-3]])
+                    if len(word_prev[:-3]) < 2:   
+                        aux_attr_data.append(player_category_map[line[i-2]])
+                    else:
+                        aux_attr_data.append(player_category_map[word_prev[:-3]])
                     aux_attr_data.append(word)
                     height, weight = line[-2], line[-1][:-3]
                     aux_attr_data.append(height)
@@ -121,7 +124,7 @@ for player_name, url in player_urls.items():
                     word_next = line[i+1]
                     aux_attr_data.append(word_next)
     if len(aux_attr_data) != aux_attr_len:
-        print(player_name, '- datapoint not included')   # due to missed auxiliary attributes, if any
+        print(player_name, '- player not included')   # due to missed auxiliary attributes, if any
         continue
     
     # storing all the required player attributes as a dictionary
@@ -141,7 +144,7 @@ for name, ratings in player_attr.items():
     player_data = [name]
     for rating in ratings:   player_data.append(rating)
     player_attr_dataframe = player_attr_dataframe.append(pd.Series(player_data,
-                                                 index = ['Player Name'] + aux_attr_list + attr_list), ignore_index=True)
+                            index = ['Player Name'] + aux_attr_list + attr_list), ignore_index=True)
 
 # trimming the dataframe
 players_per_category = {st:0, mid:0, df:0, gk:0}
