@@ -46,7 +46,7 @@ player_category_map = {'LW':st, 'ST':st, 'RW':st, 'LF':st, 'CF':st, 'RF':st,
                       'GK': gk}
 content_aux_list = ['meta', 'column col-4 text-center']
 
-attr_list = ['Crossing', 'Finishing', 'Heading Accuracy', 'Short Passing', 'Volleys', 'Dribbling', 'Curve',
+attr_list = ['Crossing', 'Finishing', 'Heading Accuracy', 'Short Passing', 'Volleys', 'Dribbling','Curve',
              'FK Accuracy', 'Long Passing', 'Ball Control', 'Acceleration', 'Sprint Speed', 'Agility', 
              'Reactions', 'Balance', 'Shot Power', 'Jumping', 'Stamina', 'Strength', 'Long Shots', 
              'Aggression', 'Interceptions', 'Positioning', 'Vision', 'Penalties', 'Composure', 'Marking',
