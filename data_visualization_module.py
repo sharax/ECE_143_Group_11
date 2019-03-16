@@ -434,6 +434,36 @@ def pWH(attributes,players,players_group_name,save_name):
 
 # In[ ]:
 
+alldata = player_attributes
+alldata['wage'] = alldata['Wage']
+alldata['wage'] = pd.to_numeric(alldata['wage'].str[1:-1])
+
+def wage(no_of_players):
+    assert isinstance(no_of_players,list)
+    for i in no_of_players:
+        assert isinstance(i,int)
+    fig = plt.figure()
+    fig, axs = plt.subplots(1,3,figsize=(15,5),sharex = True,sharey = True)
+
+    for i in range(0,3):
+        number = no_of_players[i]
+        am = alldata.mean()
+        s = alldata[alldata['Player Category']=='Striker']['wage'].head(number).mean()
+        m = alldata[alldata['Player Category']=='Midfielder']['wage'].head(number).mean()
+        d = alldata[alldata['Player Category']=='Defender']['wage'].head(number).mean()
+        g = alldata[alldata['Player Category']=='GoalKeeper']['wage'].head(number).mean()
+        
+        data = {'Striker':s,'Midfielder': m,'Defender':d,'GoalKeeper':g}
+        names = list(data.keys())
+        values = list(data.values())
+        #plt.titile(str(number))
+        axs[i].bar(names, values, color=['dodgerblue','darkorange','limegreen','r'],edgecolor = 'k',alpha = 0.8)
+        axs[i].set_xlabel('Kinds of players',fontsize = 14)
+        axs[i].set_ylabel('Wages (K)', fontsize = 14)
+        axs[i].set_title('Average Wage of '+str(number)+' top players',fontsize = 15)
+    fig.savefig('./graph/Distribution of Wages of players.PNG')
+        
+
 
 
 
