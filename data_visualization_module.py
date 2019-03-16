@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[40]:
 
 
 import pandas as pd
@@ -9,18 +9,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pylab import subplots
 from math import pi
-
+from scipy.stats import norm
+import matplotlib.mlab as mlab
+import matplotlib.patches as patches
+from scipy import interpolate 
+import seaborn as sns
 from data_loader_module import load_data
 
 
-# In[2]:
+# In[41]:
 
 
 # loading the player attributes dataframe
-player_attributes = load_data
+player_attributes = load_data()
 
 
-# In[3]:
+# In[42]:
 
 
 # generation of the categorical attributes radar plot
@@ -80,7 +84,7 @@ def categorical_attributes_radar_plot(category, attributes, percentage, no_of_pl
         
 
 
-# In[4]:
+# In[43]:
 
 
 # generation of the comprehensive attributes radar plot
@@ -141,15 +145,16 @@ def comprehensive_attributes_radar_plot(comparison_attr_dict, comparison_attr_li
     fig.savefig('radar/%s' %plot_title, bbox_inches='tight')
 
 
-# In[1]:
+# In[44]:
 
 
 #add attributes to the dataframe for further ploting
-def add_attributes(pl):
+def add_attributes(player_attributes):
     '''
     pl:DataFrame
     add attributes to player_attributes：(Attacking,Skill.....)
     '''
+    pl=player_attributes
     assert isinstance(pl,pd.DataFrame)
     pl['Attacking']=pl.loc[:,['Crossing','Finishing','Heading Accuracy','Short Passing','Volleys']].mean(1)
     pl['Skill']=pl.loc[:,['Dribbling', 'Curve', 'FK Accuracy', 'Long Passing', 'Ball Control']].mean(1)
@@ -178,32 +183,45 @@ def add_attributes(pl):
     return pl
 
 
-# In[8]:
+# In[45]:
+
+
+player_attributes=add_attributes(player_attributes)
+
+
+# In[46]:
 
 
 #group the players by their categorys
 def group_player(player_attributes):
-    player_grouped=pl.groupby('Player Category')
+    player_grouped=player_attributes.groupby('Player Category')
     strike_player=player_grouped.get_group('Striker')
     goalkeep_player=player_grouped.get_group('GoalKeeper')
     midfield_player=player_grouped.get_group('Midfielder')
     defend_player=player_grouped.get_group('Defender')
-    return strike_player,midfield_player,defend_player,goalkeedefend_player   
+    return strike_player,midfield_player,defend_player,goalkeep_player   
 
 
-# In[ ]:
+# In[47]:
 
 
-def value_vs_rating(number_of _players):
+strike_player,midfield_player,defend_player,goalkeep_player=group_player(player_attributes)
+
+
+# In[48]:
+
+
+def value_vs_rating(number_of_players):
     '''
     plot scatter plot of value vs rating
-    number_of _players(int):number of counting players
+    number_of_players(int):number of counting players
     '''
-    n=number_of _players
+    n=number_of_players
     assert isinstance(n,int)
     sns.set_style("darkgrid")
     pvh=player_attributes.sort_values('Overall Rating',ascending=False).head(n)
     pvhg=pvh.groupby('Overall Rating').mean()
+    pvhg['Overall Rating']=pvhg.index
     plt.figure(figsize=(12,6))
     sns.relplot(x='Overall Rating',y='Value(M)',hue='Player Category',aspect=1.7,legend="full",data=pvh,sizes=(20,20))
     sns.regplot(x='Overall Rating',y='Value(M)',data=pvhg,color='k',label='Mean')
@@ -212,7 +230,7 @@ def value_vs_rating(number_of _players):
     plt.savefig('./graph/Value vs top'+str(n)+' Rating2.jpg')
 
 
-# In[9]:
+# In[49]:
 
 
 def draw_pie(player_attributes):
@@ -231,7 +249,7 @@ def draw_pie(player_attributes):
     plt.savefig("./graph/Distribution of Category of players.jpg")
 
 
-# In[10]:
+# In[50]:
 
 
 def single_attribute_distribution(attribute,unit=''):
@@ -261,7 +279,7 @@ def single_attribute_distribution(attribute,unit=''):
     plt.savefig('./graph/'+'Distribution of '+item+'.jpg')
 
 
-# In[11]:
+# In[56]:
 
 
 def draw_wage_of_top(top_number,max_of_x):
@@ -270,10 +288,10 @@ def draw_wage_of_top(top_number,max_of_x):
     top_number:number of players:int
     max_of_x: limit of axis x
     '''
-    assert isinstance(h,int)
-    assert isinstance(m,int)
     h=top_number
     m=max_of_x
+    assert isinstance(h,int)
+    assert isinstance(m,int)
     item='Wage(K)'
     dph=defend_player.head(h)
     sph=strike_player.head(h)
@@ -305,7 +323,7 @@ def draw_wage_of_top(top_number,max_of_x):
     plt.xlim([0,m])
 
 
-# In[14]:
+# In[54]:
 
 
 def list_of_wage_of_top(list_of_number):
@@ -319,11 +337,11 @@ def list_of_wage_of_top(list_of_number):
     plt.figure(figsize=(6*le, 5))
     for i in range(le):
         plt.subplot(1,le,i+1)
-        draw_wage(l[i],450)
+        draw_wage_of_top(l[i],450)
     plt.savefig('./graph/Wage.jpg')
 
 
-# In[15]:
+# In[30]:
 
 
 def plot_height_weight_BMI(attribute,players):
@@ -363,7 +381,7 @@ def plot_height_weight_BMI(attribute,players):
     fig.savefig('./graph/'+item+'.jpg')
 
 
-# In[16]:
+# In[61]:
 
 
 def pWH(attributes,players,players_group_name,save_name):
@@ -384,7 +402,7 @@ def pWH(attributes,players,players_group_name,save_name):
     assert isinstance(itemn,str)
     x=[ply.groupby('Hight (cm)').mean(),ply.groupby('Weight').mean()]
     l=len(items)
-    fig,axs=subplots(l,2,figsize=(12, 5*l))
+    fig,axs=subplots(l,2,figsize=(12, 6*l))
     for j in range(l):
         item=items[j]
         for i in range(2):
@@ -412,4 +430,10 @@ def pWH(attributes,players,players_group_name,save_name):
             ax.set_ylim([0,100])
             ax.set_xlim([min(xv),max(xv)])
     fig.savefig('./graph/'+itemn+' of '+pln+'.jpg')
+
+
+# In[ ]:
+
+
+
 
