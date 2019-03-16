@@ -18,7 +18,7 @@ Files:<br>
 2.) ECE_143_Group11.pptx: Final PPT <br>
 <br>
 Folders:<br>
-1.)Graphs: Contains All Images <br>
+1.)Figures: Contains All Images <br>
 
 
 
